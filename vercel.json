@@ -1,1 +1,1 @@
-{"version":2,"builds":[{"src":"config/wsgi.py","use":"@vercel/python","config":{"buildCommand":"python manage.py collectstatic --noinput"}}],"routes":[{"src":"/(.*)","dest":"config/wsgi.py"}]}
+{"version":2,"builds":[{"src":"config/wsgi.py","use":"@vercel/python"}],"routes":[{"src":"/(.*)","dest":"config/wsgi.py"}]}
