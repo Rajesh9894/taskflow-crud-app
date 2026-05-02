@@ -1,0 +1,430 @@
+/* ===========================
+   SIMPLE TASKFLOW CSS
+   Beginner Friendly Version
+   Same Design + Easier Code
+=========================== */
+
+
+/* Reset */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+
+/* Body */
+body{
+    font-family:Arial, sans-serif;
+    background:#111827;
+    color:white;
+}
+
+
+/* Layout */
+.layout{
+    display:flex;
+    min-height:100vh;
+}
+
+
+/* ================= Sidebar ================= */
+
+.sidebar{
+    width:230px;
+    background:#1f2937;
+    padding:20px;
+}
+
+.logo{
+    border-bottom:1px solid #333;
+    padding-bottom:20px;
+    margin-bottom:20px;
+}
+
+.logo-text{
+    font-size:22px;
+    font-weight:bold;
+}
+
+.logo-sub{
+    font-size:12px;
+    color:gray;
+}
+
+
+/* Navigation */
+
+.nav-section{
+    font-size:12px;
+    color:gray;
+    margin-bottom:10px;
+    text-transform:uppercase;
+}
+
+.nav-item{
+    padding:10px;
+    margin-bottom:5px;
+    border-radius:6px;
+    cursor:pointer;
+    color:#ddd;
+}
+
+.nav-item:hover,
+.nav-item.active{
+    background:#4f46e5;
+    color:white;
+}
+
+.nav-badge{
+    float:right;
+    background:white;
+    color:black;
+    padding:2px 7px;
+    border-radius:20px;
+    font-size:11px;
+}
+
+
+/* ================= Main ================= */
+
+.main{
+    flex:1;
+    padding:30px;
+}
+
+
+/* Header */
+
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.page-title{
+    font-size:28px;
+    font-weight:bold;
+}
+
+.page-sub{
+    color:gray;
+    font-size:14px;
+}
+
+
+/* ================= Buttons ================= */
+
+.btn{
+    padding:10px 15px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.btn-primary{
+    background:#4f46e5;
+    color:white;
+}
+
+.btn-secondary{
+    background:#374151;
+    color:white;
+}
+
+.btn-danger{
+    background:#dc2626;
+    color:white;
+}
+
+.btn-sm{
+    padding:6px 10px;
+    font-size:12px;
+}
+
+
+/* ================= Stats ================= */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.stat-card{
+    background:#1f2937;
+    padding:20px;
+    border-radius:8px;
+}
+
+.stat-label{
+    color:gray;
+    font-size:13px;
+}
+
+.stat-value{
+    font-size:28px;
+    margin-top:10px;
+}
+
+
+/* ================= Toolbar ================= */
+
+.toolbar{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.search-box{
+    flex:1;
+}
+
+.search-box input,
+select{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:6px;
+    background:#374151;
+    color:white;
+}
+
+
+/* ================= Table ================= */
+
+.task-table-wrap{
+    background:#1f2937;
+    border-radius:8px;
+    overflow:hidden;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#111827;
+    padding:14px;
+    text-align:left;
+    color:gray;
+}
+
+td{
+    padding:14px;
+    border-top:1px solid #333;
+}
+
+tr:hover{
+    background:#2a3444;
+}
+
+
+/* Task */
+
+.task-title{
+    font-weight:bold;
+}
+
+.task-desc{
+    font-size:12px;
+    color:gray;
+}
+
+
+/* ================= Badges ================= */
+
+.badge{
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+}
+
+/* Status */
+.badge-todo{
+    background:gray;
+}
+
+.badge-in_progress{
+    background:orange;
+}
+
+.badge-done{
+    background:green;
+}
+
+/* Priority */
+.badge-high{
+    background:red;
+}
+
+.badge-medium{
+    background:blue;
+}
+
+.badge-low{
+    background:green;
+}
+
+
+/* Action Buttons */
+
+.actions{
+    display:flex;
+    gap:8px;
+}
+
+
+/* ================= Modal ================= */
+
+.modal-overlay{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background:rgba(0,0,0,0.7);
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-overlay.show{
+    display:flex;
+}
+
+.modal{
+    background:#1f2937;
+    width:500px;
+    padding:20px;
+    border-radius:10px;
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:20px;
+}
+
+.modal-title{
+    font-size:20px;
+    font-weight:bold;
+}
+
+.modal-close{
+    background:red;
+    color:white;
+    border:none;
+    padding:5px 10px;
+    cursor:pointer;
+}
+
+.modal-footer{
+    margin-top:20px;
+    text-align:right;
+}
+
+
+/* ================= Form ================= */
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-label{
+    display:block;
+    margin-bottom:5px;
+}
+
+.form-control{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:6px;
+    background:#374151;
+    color:white;
+}
+
+textarea{
+    min-height:80px;
+}
+
+.form-row{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:10px;
+}
+
+.form-error{
+    color:red;
+    font-size:12px;
+    display:none;
+}
+
+
+/* ================= Toast ================= */
+
+.toast-container{
+    position:fixed;
+    top:20px;
+    right:20px;
+}
+
+.toast{
+    background:#1f2937;
+    padding:12px 18px;
+    margin-bottom:10px;
+    border-radius:6px;
+}
+
+.toast.success{
+    border-left:4px solid green;
+}
+
+.toast.error{
+    border-left:4px solid red;
+}
+
+
+/* ================= Empty State ================= */
+
+.empty-state{
+    text-align:center;
+    padding:40px;
+    color:gray;
+}
+
+.empty-icon{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+
+/* Spinner */
+
+.spinner{
+    width:20px;
+    height:20px;
+    border:3px solid gray;
+    border-top:3px solid white;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+    margin:auto;
+}
+
+@keyframes spin{
+    100%{
+        transform:rotate(360deg);
+    }
+}
+
+
+/* Small Text */
+
+.tag{
+    color:gray;
+    font-size:12px;
+}
