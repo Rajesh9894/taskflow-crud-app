@@ -42,7 +42,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',   # ✅ Whitenoise for static files
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -58,7 +58,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # =========================
-# DATABASE
+# DATABASE (only once — with SSL)
 # =========================
 if os.environ.get("DATABASE_URL"):
     url = urllib.parse.urlparse(os.environ["DATABASE_URL"])
@@ -69,11 +69,13 @@ if os.environ.get("DATABASE_URL"):
             "USER": url.username,
             "PASSWORD": url.password,
             "HOST": url.hostname,
-            "PORT": url.port,
+            "PORT": url.port or 5432,
+            "OPTIONS": {
+                "sslmode": "require",
+            },
         }
     }
 else:
-    # Local development — uses your existing PostgreSQL
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -119,7 +121,7 @@ USE_TZ = True
 # STATIC FILES
 # =========================
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'             # ✅ Required for Vercel
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -145,35 +147,5 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [],  
+    'DEFAULT_AUTHENTICATION_CLASSES': [],
 }
-
-# =========================
-# DATABASE
-# =========================
-if os.environ.get("DATABASE_URL"):
-    url = urllib.parse.urlparse(os.environ["DATABASE_URL"])
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": url.path.lstrip("/"),
-            "USER": url.username,
-            "PASSWORD": url.password,
-            "HOST": url.hostname,
-            "PORT": url.port or 5432,
-            "OPTIONS": {
-                "sslmode": "require",  # ✅ SSL required for Neon
-            },
-        }
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'taskdb',
-            'USER': 'postgres',
-            'PASSWORD': '2005',
-            'HOST': 'localhost',
-            'PORT': '5432',
-        }
-    }
