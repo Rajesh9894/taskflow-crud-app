@@ -1,12 +1,18 @@
+import os
+import urllib.parse
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-taskmanager-crud-app-secret-key-2024'
+# =========================
+# SECRET KEY & DEBUG
+# =========================
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-taskmanager-crud-app-secret-key-2024")
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-DEBUG = True
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".vercel.app"]
 
-ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ["https://*.vercel.app"]
 
 
 # =========================
@@ -23,6 +29,7 @@ INSTALLED_APPS = [
     # third party
     'rest_framework',
     'corsheaders',
+    'whitenoise.runserver_nostatic',
 
     # app
     'tasks',
@@ -35,9 +42,10 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',   # ✅ Whitenoise for static files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',  # ✅ Restored
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -50,18 +58,32 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # =========================
-# DATABASE (POSTGRESQL)
+# DATABASE
 # =========================
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'taskdb',
-        'USER': 'postgres',
-        'PASSWORD': '2005',
-        'HOST': 'localhost',
-        'PORT': '5432',
+if os.environ.get("DATABASE_URL"):
+    url = urllib.parse.urlparse(os.environ["DATABASE_URL"])
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": url.path.lstrip("/"),
+            "USER": url.username,
+            "PASSWORD": url.password,
+            "HOST": url.hostname,
+            "PORT": url.port,
+        }
     }
-}
+else:
+    # Local development — uses your existing PostgreSQL
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'taskdb',
+            'USER': 'postgres',
+            'PASSWORD': '2005',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
 
 
 # =========================
@@ -88,31 +110,30 @@ TEMPLATES = [
 # LANGUAGE / TIME
 # =========================
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'Asia/Kolkata'
-
 USE_I18N = True
 USE_TZ = True
 
 
 # =========================
-# STATIC
+# STATIC FILES
 # =========================
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'             # ✅ Required for Vercel
 STATICFILES_DIRS = [BASE_DIR / 'static']
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # =========================
-# CORS (React CONNECT)
+# CORS
 # =========================
 CORS_ALLOW_ALL_ORIGINS = True
 
 
 # =========================
-# DRF SETTINGS ✅ FIXED
+# DRF SETTINGS
 # =========================
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
@@ -124,5 +145,35 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [],  # ✅ Empty — removes CSRF enforcement by DRF
+    'DEFAULT_AUTHENTICATION_CLASSES': [],  
 }
+
+# =========================
+# DATABASE
+# =========================
+if os.environ.get("DATABASE_URL"):
+    url = urllib.parse.urlparse(os.environ["DATABASE_URL"])
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": url.path.lstrip("/"),
+            "USER": url.username,
+            "PASSWORD": url.password,
+            "HOST": url.hostname,
+            "PORT": url.port or 5432,
+            "OPTIONS": {
+                "sslmode": "require",  # ✅ SSL required for Neon
+            },
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'taskdb',
+            'USER': 'postgres',
+            'PASSWORD': '2005',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
