@@ -13,10 +13,7 @@ class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     permission_classes = [AllowAny]
 
-
-    # ===============================
     # SEARCH / FILTER
-    # ===============================
     def get_queryset(self):
         tasks = Task.objects.all()
 
@@ -35,10 +32,8 @@ class TaskViewSet(viewsets.ModelViewSet):
 
         return tasks
 
-
-    # ===============================
     # CREATE
-    # ===============================
+
     def create(self, request, *args, **kwargs):
         serializer = TaskSerializer(data=request.data)
 
@@ -55,9 +50,9 @@ class TaskViewSet(viewsets.ModelViewSet):
         }, status=status.HTTP_400_BAD_REQUEST)
 
 
-    # ===============================
+  
     # UPDATE
-    # ===============================
+
     def update(self, request, *args, **kwargs):
         task = self.get_object()
 
@@ -73,9 +68,9 @@ class TaskViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-    # ===============================
+    
     # DELETE
-    # ===============================
+
     def destroy(self, request, *args, **kwargs):
         task = self.get_object()
         task.delete()
@@ -85,9 +80,9 @@ class TaskViewSet(viewsets.ModelViewSet):
         }, status=status.HTTP_204_NO_CONTENT)
 
 
-    # ===============================
+
     # STATS API
-    # ===============================
+   
     @action(detail=False, methods=["get"])
     def stats(self, request):
         return Response({

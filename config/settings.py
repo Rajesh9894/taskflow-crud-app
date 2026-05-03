@@ -4,9 +4,8 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# =========================
 # SECRET KEY & DEBUG
-# =========================
+
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-taskmanager-crud-app-secret-key-2024")
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
@@ -14,10 +13,8 @@ ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".vercel.app"]
 
 CSRF_TRUSTED_ORIGINS = ["https://*.vercel.app"]
 
-
-# =========================
 # INSTALLED APPS
-# =========================
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -35,10 +32,8 @@ INSTALLED_APPS = [
     'tasks',
 ]
 
-
-# =========================
 # MIDDLEWARE
-# =========================
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -56,10 +51,8 @@ ROOT_URLCONF = 'config.urls'
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
-# =========================
 # DATABASE (only once — with SSL)
-# =========================
+
 if os.environ.get("DATABASE_URL"):
     url = urllib.parse.urlparse(os.environ["DATABASE_URL"])
     DATABASES = {
@@ -87,10 +80,8 @@ else:
         }
     }
 
-
-# =========================
 # TEMPLATES
-# =========================
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -108,18 +99,16 @@ TEMPLATES = [
 ]
 
 
-# =========================
 # LANGUAGE / TIME
-# =========================
+
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
 USE_TZ = True
 
 
-# =========================
 # STATIC FILES
-# =========================
+
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
@@ -128,15 +117,12 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# =========================
 # CORS
-# =========================
+
 CORS_ALLOW_ALL_ORIGINS = True
 
-
-# =========================
 # DRF SETTINGS
-# =========================
+
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
