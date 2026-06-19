@@ -1,5 +1,5 @@
 // API URL
-const API = window.location.origin + '/api'
+const API = window.location.origin + '/api' //works on local and server 
 
 // Global Variables
 let editId = null;
@@ -7,7 +7,7 @@ let deleteId = null;
 let searchTimer = null;
 
 // Load Tasks
-async function loadTasks() {
+async function loadTasks() {   //fetch data from backend 
   let search = document.getElementById("searchInput").value;
   let status = document.getElementById("statusFilter").value;
   let priority = document.getElementById("priorityFilter").value;
@@ -20,7 +20,7 @@ async function loadTasks() {
 
   let tbody = document.getElementById("taskTableBody");
 
-  tbody.innerHTML = `
+  tbody.innerHTML = `     // Html contend inside the element
     <tr>
       <td colspan="6" style="text-align:center;padding:40px;">
         <div class="spinner"></div>
@@ -31,14 +31,15 @@ async function loadTasks() {
     let response = await fetch(url);
     let data = await response.json();
     let tasks = data.results || data;
-    showTasks(tasks);
-    loadStats();
-  } catch (error) {
+    showTasks(tasks); //Dynamic renders
+    loadStats(); //update dashboard 
+  } 
+  catch (error) {
     tbody.innerHTML = `
       <tr>
         <td colspan="6">
           <div class="empty-state">
-            <div class="empty-icon">⚠</div>
+            <div class="empty-icon">\\</div>
             <h3>API Connection Failed</h3>
             <p>Run Django server on port 8000</p>
           </div>
@@ -56,7 +57,7 @@ function showTasks(tasks) {
       <tr>
         <td colspan="6">
           <div class="empty-state">
-            <div class="empty-icon">☑</div>
+            <div class="empty-icon"> //</div>
             <h3>No Tasks Found</h3>
             <p>Create task or change filter</p>
           </div>

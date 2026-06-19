@@ -1,13 +1,14 @@
-asgiref==3.11.1
-Django==6.0.4
-django-cors-headers==4.9.0
-djangorestframework==3.17.1
-gunicorn==25.3.0
-packaging==26.2
-psycopg==3.3.4
-psycopg-binary==3.3.4
-psycopg2-binary==2.9.12
-python-dotenv==1.2.2
-sqlparse==0.5.5
-tzdata==2026.2
-whitenoise==6.12.0
+asgiref==3.11.1 
+Django==6.0.4 
+django-cors-headers==4.9.0 #handle CORS in Django 
+djangorestframework==3.17.1 #Django REST Framework for building APIs
+django-storages==1.13.2 #Handle file storage in Django
+gunicorn==25.3.0  #Default server 
+packaging==26.2   #version handling 
+psycopg==3.3.4 
+psycopg-binary==3.3.4 
+psycopg2-binary==2.9.12 
+python-dotenv==1.2.2 
+sqlparse==0.5.5 #SQL parsing for Django's database layer
+tzdata==2026.2 
+whitenoise==6.12.0 #serve Static files in production

@@ -2,19 +2,18 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
-
 from .models import Task
 from .serializers import TaskSerializer
 
 
-class TaskViewSet(viewsets.ModelViewSet):
+class TaskViewSet(viewsets.ModelViewSet):  #viewset provide buildin 
 
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
     permission_classes = [AllowAny]
 
     # SEARCH / FILTER
-    def get_queryset(self):
+    def get_queryset(self):    #dynamic filtering based on query parameters
         tasks = Task.objects.all()
 
         search = self.request.GET.get("search")

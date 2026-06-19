@@ -3,7 +3,7 @@ import os
 import sys
 from dotenv import load_dotenv
 
-load_dotenv(".env.local")
+load_dotenv(".env.local") #Load the environment variable in Locale file 
 
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
